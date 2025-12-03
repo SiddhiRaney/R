@@ -1,0 +1,61 @@
+# 1. Hello World
+print("Hello World")
+
+# 2. Add two numbers
+a <- 10
+b <- 20
+sum <- a + b
+print(sum)
+
+# 3. Square of a number
+num <- 7
+square <- num^2
+print(square)
+
+# 4. Check even or odd
+num <- 11
+if(num %% 2 == 0){
+  print("Even")
+} else {
+  print("Odd")
+}
+
+# 5. User input
+# (Run only in console, not inside script editors)
+# name <- readline("Enter your name: ")
+# print(paste("Hello", name))
+
+# 6. Create a vector
+v <- c(1, 2, 3, 4, 5)
+print(v)
+
+# 7. Mean of vector
+v <- c(10, 20, 30, 40)
+print(mean(v))
+
+# 8. Sum of numbers in vector
+v <- c(5, 10, 15)
+print(sum(v))
+
+# 9. Simple for loop
+for(i in 1:5){
+  print(i)
+}
+
+# 10. Function to add two numbers
+add_numbers <- function(a, b){
+  return(a + b)
+}
+print(add_numbers(5, 8))
+
+# 11. Create a data frame
+df <- data.frame(
+  Name = c("A", "B", "C"),
+  Age = c(20, 21, 22)
+)
+print(df)
+
+# 12. Simple plot
+x <- c(1, 2, 3, 4)
+y <- c(3, 6, 9, 12)
+plot(x, y, type = "l")   # line plot
