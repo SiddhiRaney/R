@@ -59,3 +59,96 @@ print(df)
 x <- c(1, 2, 3, 4)
 y <- c(3, 6, 9, 12)
 plot(x, y, type = "l")   # line plot
+
+# 13. While loop
+count <- 1
+while(count <= 5){
+  print(count)
+  count <- count + 1
+}
+
+# 14. Repeat loop with break
+num <- 1
+repeat {
+  print(num)
+  num <- num + 1
+  if(num > 5){
+    break
+  }
+}
+
+# 15. Sequence generation
+seq_vec <- seq(1, 10, by = 2)
+print(seq_vec)
+
+# 16. Sorting a vector
+v <- c(5, 2, 9, 1, 4)
+print(sort(v))
+
+# 17. Maximum and minimum of vector
+nums <- c(10, 25, 3, 45, 2)
+print(max(nums))
+print(min(nums))
+
+# 18. Factor creation
+colors <- factor(c("Red", "Blue", "Red", "Green"))
+print(colors)
+
+# 19. Matrix creation
+mat <- matrix(1:9, nrow = 3, ncol = 3)
+print(mat)
+
+# 20. Access matrix element
+print(mat[2, 3])   # row 2, column 3
+
+# 21. List creation
+my_list <- list(Name="Siddhi", Age=23, Scores=c(90, 85, 88))
+print(my_list)
+
+# 22. Add new element to list
+my_list$City <- "Goa"
+print(my_list)
+
+# 23. Read CSV file (example)
+# df <- read.csv("data.csv")
+
+# 24. Write CSV file
+# write.csv(df, "output.csv", row.names = FALSE)
+
+# 25. Bar plot
+values <- c(5, 10, 15)
+names(values) <- c("A", "B", "C")
+barplot(values, col="pink")
+
+# 26. Histogram
+set.seed(10)
+random_nums <- rnorm(100)
+hist(random_nums, main="Histogram", xlab="Values")
+
+# 27. Boxplot
+boxplot(random_nums, main="Boxplot of Random Values")
+
+# 28. Function to find factorial
+fact_fun <- function(n){
+  if(n == 0) return(1)
+  prod <- 1
+  for(i in 1:n){
+    prod <- prod * i
+  }
+  return(prod)
+}
+print(fact_fun(5))
+
+# 29. String operations
+str <- "Hello R Programming"
+print(nchar(str))          # number of characters
+print(toupper(str))        # uppercase
+print(tolower(str))        # lowercase
+
+# 30. Data frame summary
+df2 <- data.frame(
+  Marks = c(88, 92, 76, 81, 95),
+  Subject = c("Math", "CS", "Physics", "Chem", "Bio")
+)
+print(summary(df2))
+
