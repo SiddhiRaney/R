@@ -152,3 +152,87 @@ df2 <- data.frame(
 )
 print(summary(df2))
 
+# 31. Check positive, negative, or zero
+num <- -3
+if(num > 0){
+  print("Positive")
+} else if(num < 0){
+  print("Negative")
+} else {
+  print("Zero")
+}
+
+# 32. Multiply all numbers in a vector
+v <- c(2, 3, 4)
+print(prod(v))
+
+# 33. Generate random numbers
+set.seed(100)
+print(runif(5))     # 5 random numbers between 0 and 1
+
+# 34. Create a sequence using ':' operator
+seq2 <- 5:15
+print(seq2)
+
+# 35. Check if a number exists in vector
+v <- c(1, 4, 6, 8)
+print(6 %in% v)
+
+# 36. Reverse a vector
+v <- c(10, 20, 30)
+print(rev(v))
+
+# 37. Remove NA values
+vec <- c(1, NA, 3, NA, 5)
+print(na.omit(vec))
+
+# 38. Create a factor with levels
+sizes <- factor(c("S", "M", "L", "M", "S"), levels=c("S", "M", "L"))
+print(sizes)
+
+# 39. Matrix addition
+A <- matrix(1:4, nrow=2)
+B <- matrix(5:8, nrow=2)
+print(A + B)
+
+# 40. Matrix multiplication
+print(A %*% B)
+
+# 41. Data frame: access a column
+df3 <- data.frame(id=1:3, score=c(90, 85, 88))
+print(df3$score)
+
+# 42. Add new column to data frame
+df3$grade <- c("A", "B", "A")
+print(df3)
+
+# 43. Simple ifelse example
+x <- c(5, 12, 7)
+print(ifelse(x > 10, "High", "Low"))
+
+# 44. Repeat a string
+print(rep("Goa", 5))
+
+# 45. Merge two vectors
+v1 <- c(1, 2, 3)
+v2 <- c(4, 5, 6)
+print(c(v1, v2))
+
+# 46. Unique elements of a vector
+v <- c(1, 2, 2, 3, 3, 3)
+print(unique(v))
+
+# 47. Sorting data frame by column
+df_sorted <- df3[order(df3$score), ]
+print(df_sorted)
+
+# 48. Write text to a file
+write("Hello Siddhi!", file="example.txt")
+
+# 49. Read text file
+print(readLines("example.txt"))
+
+# 50. Pie chart
+slices <- c(40, 30, 20, 10)
+labels <- c("A", "B", "C", "D")
+pie(slices, labels=labels, main="Sample Pie Chart")
