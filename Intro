@@ -236,3 +236,106 @@ print(readLines("example.txt"))
 slices <- c(40, 30, 20, 10)
 labels <- c("A", "B", "C", "D")
 pie(slices, labels=labels, main="Sample Pie Chart")
+
+
+# Load required library
+library(shiny)
+
+# UI: User Interface
+ui <- fluidPage(
+  titlePanel("R Basics GUI - Siddhi's Playground"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      h4("Operations"),
+      selectInput("operation", "Choose an operation:", 
+                  choices = c("Hello World", 
+                              "Add Two Numbers", 
+                              "Square Number", 
+                              "Even/Odd Check",
+                              "Vector Operations",
+                              "Data Frame Operations",
+                              "Plotting")),
+      conditionalPanel(
+        condition = "input.operation == 'Add Two Numbers' || input.operation == 'Square Number' || input.operation == 'Even/Odd Check'",
+        numericInput("num1", "Enter first number:", value = 0),
+        numericInput("num2", "Enter second number (optional):", value = 0)
+      ),
+      conditionalPanel(
+        condition = "input.operation == 'Vector Operations'",
+        textInput("vec_input", "Enter vector elements separated by comma:", "1,2,3,4")
+      ),
+      conditionalPanel(
+        condition = "input.operation == 'Plotting'",
+        numericInput("plot_n", "Number of random points:", value = 50, min = 10, max = 500)
+      ),
+      actionButton("runBtn", "Run Operation")
+    ),
+    
+    mainPanel(
+      h4("Output"),
+      verbatimTextOutput("outputText"),
+      plotOutput("plotOutput")
+    )
+  )
+)
+
+# Server: Logic
+server <- function(input, output) {
+  
+  observeEvent(input$runBtn, {
+    
+    # Default outputs
+    outText <- ""
+    outPlot <- NULL
+    
+    # Hello World
+    if(input$operation == "Hello World") {
+      outText <- "Hello World!"
+    }
+    
+    # Add two numbers
+    else if(input$operation == "Add Two Numbers") {
+      outText <- paste("Sum:", input$num1 + input$num2)
+    }
+    
+    # Square of number
+    else if(input$operation == "Square Number") {
+      outText <- paste("Square:", input$num1^2)
+    }
+    
+    # Even/Odd check
+    else if(input$operation == "Even/Odd Check") {
+      outText <- if(input$num1 %% 2 == 0) "Even" else "Odd"
+    }
+    
+    # Vector operations
+    else if(input$operation == "Vector Operations") {
+      vec <- as.numeric(unlist(strsplit(input$vec_input, ",")))
+      outText <- paste("Vector:", toString(vec),
+                       "\nSum:", sum(vec),
+                       "\nMean:", mean(vec),
+                       "\nProduct:", prod(vec),
+                       "\nMax:", max(vec),
+                       "\nMin:", min(vec),
+                       "\nReversed:", toString(rev(vec)),
+                       "\nUnique:", toString(unique(vec)))
+    }
+    
+    # Plotting
+    else if(input$operation == "Plotting") {
+      set.seed(100)
+      x <- rnorm(input$plot_n)
+      y <- rnorm(input$plot_n)
+      outPlot <- plot(x, y, main="Random Scatter Plot", xlab="X", ylab="Y", col="blue", pch=19)
+    }
+    
+    # Render output
+    output$outputText <- renderText({ outText })
+    output$plotOutput <- renderPlot({ outPlot })
+    
+  })
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
