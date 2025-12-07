@@ -339,3 +339,161 @@ server <- function(input, output) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
+
+
+
+library(shiny)
+
+# UI
+ui <- fluidPage(
+  titlePanel("R Basics GUI - Siddhi's Playground"),
+  
+  sidebarLayout(
+    sidebarPanel(
+      h4("Operations"),
+      selectInput(
+        "operation", 
+        "Choose an operation:",
+        choices = c(
+          "Hello World",
+          "Add Two Numbers",
+          "Square Number",
+          "Even/Odd Check",
+          "Vector Operations",
+          "List Creation",        # <<< ADDED
+          "Data Frame Creation",  # <<< ADDED
+          "Plotting"
+        )
+      ),
+      
+      # Numeric inputs for arithmetic
+      conditionalPanel(
+        condition = "input.operation == 'Add Two Numbers' || 
+                     input.operation == 'Square Number' || 
+                     input.operation == 'Even/Odd Check'",
+        numericInput("num1", "Enter first number:", value = 0),
+        numericInput("num2", "Enter second number (optional):", value = 0)
+      ),
+      
+      # Vector input 
+      conditionalPanel(
+        condition = "input.operation == 'Vector Operations'",
+        textInput("vec_input", "Enter vector elements separated by comma:", "1,2,3,4")
+      ),
+      
+      # List creation input
+      conditionalPanel(
+        condition = "input.operation == 'List Creation'",
+        textInput("list_name", "Enter Name:", "Siddhi"),
+        numericInput("list_age", "Enter Age:", 21),
+        textInput("list_scores", "Enter Scores (comma-separated):", "90,85,88")
+      ),
+      
+      # Data frame creation input
+      conditionalPanel(
+        condition = "input.operation == 'Data Frame Creation'",
+        textInput("df_col1", "Enter Column 1 values:", "A,B,C"),
+        textInput("df_col2", "Enter Column 2 values:", "20,21,22")
+      ),
+      
+      # Plotting input
+      conditionalPanel(
+        condition = "input.operation == 'Plotting'",
+        numericInput("plot_n", "Number of random points:", value = 50, min = 10, max = 500)
+      ),
+      
+      actionButton("runBtn", "Run Operation")
+    ),
+    
+    mainPanel(
+      h4("Output"),
+      verbatimTextOutput("outputText"),
+      plotOutput("plotOutput")
+    )
+  )
+)
+
+# SERVER
+server <- function(input, output) {
+  observeEvent(input$runBtn, {
+    
+    outText <- ""
+    outPlot <- NULL
+    
+    # Hello World
+    if (input$operation == "Hello World") {
+      outText <- "Hello World!"
+    }
+    
+    # Add 2 numbers
+    else if (input$operation == "Add Two Numbers") {
+      outText <- paste("Sum:", input$num1 + input$num2)
+    }
+    
+    # Square
+    else if (input$operation == "Square Number") {
+      outText <- paste("Square:", input$num1^2)
+    }
+    
+    # Even or Odd
+    else if (input$operation == "Even/Odd Check") {
+      outText <- if (input$num1 %% 2 == 0) "Even" else "Odd"
+    }
+    
+    # Vector Operations
+    else if (input$operation == "Vector Operations") {
+      vec <- as.numeric(unlist(strsplit(input$vec_input, ",")))
+      outText <- paste("Vector:", toString(vec),
+                       "\nSum:", sum(vec),
+                       "\nMean:", mean(vec),
+                       "\nProduct:", prod(vec),
+                       "\nMax:", max(vec),
+                       "\nMin:", min(vec),
+                       "\nReversed:", toString(rev(vec)),
+                       "\nUnique:", toString(unique(vec)))
+    }
+    
+    # LIST CREATION  <<< NEW FEATURE
+    else if (input$operation == "List Creation") {
+      scores <- as.numeric(unlist(strsplit(input$list_scores, ",")))
+      lst <- list(
+        Name = input$list_name,
+        Age = input$list_age,
+        Scores = scores
+      )
+      outText <- capture.output(print(lst))
+    }
+    
+    # DATA FRAME CREATION  <<< NEW FEATURE
+    else if (input$operation == "Data Frame Creation") {
+      col1 <- unlist(strsplit(input$df_col1, ","))
+      col2 <- as.numeric(unlist(strsplit(input$df_col2, ",")))
+      
+      df <- data.frame(
+        Column1 = col1,
+        Column2 = col2
+      )
+      outText <- capture.output(print(df))
+    }
+    
+    # Plotting
+    else if (input$operation == "Plotting") {
+      set.seed(100)
+      x <- rnorm(input$plot_n)
+      y <- rnorm(input$plot_n)
+      outPlot <- plot(x, y, 
+                      main="Random Scatter Plot", 
+                      xlab="X", 
+                      ylab="Y",
+                      pch=19)
+    }
+    
+    # Render outputs
+    output$outputText <- renderText({ outText })
+    output$plotOutput <- renderPlot({ outPlot })
+  })
+}
+
+# Run App
+shinyApp(ui = ui, server = server)
+
