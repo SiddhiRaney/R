@@ -1,0 +1,68 @@
+# -------------------------------------------
+# 1. BAR PLOT
+# Shows vertical bars for each category
+values <- c(12, 25, 18, 30)
+categories <- c("A", "B", "C", "D")
+barplot(values, names.arg = categories, col = "skyblue", main = "Bar Plot")
+
+# -------------------------------------------
+# 2. HISTOGRAM
+# Displays frequency distribution of numeric data
+data1 <- c(5,10,12,15,13,9,22,23,18,16,14)
+hist(data1, col = "lightgreen", main = "Histogram")
+
+# -------------------------------------------
+# 3. LINE PLOT
+# Shows trend line connecting sequential points
+x <- 1:10
+y <- c(2,5,6,8,7,9,12,15,14,16)
+plot(x, y, type = "l", col = "blue", main = "Line Plot")
+
+# -------------------------------------------
+# 4. SCATTER PLOT
+# Plots individual data points to show relationships
+x2 <- c(1,2,3,4,5,6,7,8)
+y2 <- c(2,4,3,6,7,5,9,10)
+plot(x2, y2, main = "Scatter Plot", col = "red", pch = 19)
+
+# -------------------------------------------
+# 5. BOX PLOT
+# Shows median, quartiles, and outliers
+data2 <- c(12, 15, 20, 22, 25, 30, 35, 40)
+boxplot(data2, col = "orange", main = "Box Plot")
+
+# -------------------------------------------
+# 6. PIE CHART
+# Shows proportion of categories in a circle
+values2 <- c(20, 30, 25, 25)
+labels2 <- c("Apple", "Banana", "Grapes", "Mango")
+pie(values2, labels2, main = "Pie Chart")
+
+# -------------------------------------------
+# 7. DENSITY PLOT
+# Smooth curve representing distribution of data
+data3 <- rnorm(100, mean = 50, sd = 10)
+plot(density(data3), main = "Density Plot", col = "purple")
+
+# -------------------------------------------
+# 8. STEM AND LEAF PLOT
+# Displays distribution using stems and leaves
+data4 <- c(12, 15, 17, 18, 21, 22, 25, 27, 29)
+stem(data4)
+
+# -------------------------------------------
+# 9. MULTIPLE BOXPLOTS
+# Compares distributions across groups
+group1 <- rnorm(50, mean = 20)
+group2 <- rnorm(50, mean = 30)
+boxplot(group1, group2, names = c("Group 1", "Group 2"),
+        col = c("pink", "lightblue"), main = "Multiple Boxplots")
+
+# -------------------------------------------
+# 10. GROUPED BAR PLOT
+# Compares multiple groups across categories
+values3 <- matrix(c(10, 20, 15, 25, 18, 22), nrow = 2, byrow = TRUE)
+colnames(values3) <- c("A", "B", "C")
+rownames(values3) <- c("Group1", "Group2")
+barplot(values3, beside = TRUE, col = c("red", "blue"),
+        main = "Grouped Bar Plot", legend = rownames(values3))
