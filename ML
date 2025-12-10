@@ -1,0 +1,125 @@
+#########################################
+# 1. Linear Regression
+#########################################
+library(caret)
+
+data(mtcars)
+lr_model <- train(mpg ~ wt + hp, data = mtcars, method = "lm")
+summary(lr_model)
+
+
+#########################################
+# 2. Logistic Regression
+#########################################
+data <- mtcars
+data$am <- factor(data$am)
+
+log_model <- glm(am ~ wt + hp, data = data, family = binomial)
+summary(log_model)
+
+
+#########################################
+# 3. Decision Tree
+#########################################
+library(rpart)
+library(rpart.plot)
+
+dt_model <- rpart(Species ~ ., data = iris)
+rpart.plot(dt_model)
+
+
+#########################################
+# 4. Random Forest
+#########################################
+library(randomForest)
+
+rf_model <- randomForest(Species ~ ., data = iris, ntree = 200)
+print(rf_model)
+
+
+#########################################
+# 5. KNN Classification
+#########################################
+library(class)
+
+train <- iris[1:100, -5]
+test  <- iris[101:150, -5]
+
+train_labels <- iris[1:100, 5]
+test_labels  <- iris[101:150, 5]
+
+knn_pred <- knn(train, test, train_labels, k = 5)
+table(knn_pred, test_labels)
+
+
+#########################################
+# 6. SVM
+#########################################
+library(e1071)
+
+svm_model <- svm(Species ~ ., data = iris, kernel = "radial")
+svm_pred <- predict(svm_model, iris)
+table(svm_pred, iris$Species)
+
+
+#########################################
+# 7. Naive Bayes
+#########################################
+library(e1071)
+
+nb_model <- naiveBayes(Species ~ ., data = iris)
+nb_pred <- predict(nb_model, iris)
+table(nb_pred, iris$Species)
+
+
+#########################################
+# 8. K-Means Clustering
+#########################################
+set.seed(42)
+km_model <- kmeans(iris[, 1:4], centers = 3)
+print(km_model$cluster)
+
+
+#########################################
+# 9. Hierarchical Clustering
+#########################################
+dist_mat <- dist(iris[, 1:4])
+hc_model <- hclust(dist_mat, method = "complete")
+plot(hc_model)
+
+
+#########################################
+# 10. PCA (Principal Component Analysis)
+#########################################
+pca_model <- prcomp(iris[, 1:4], scale. = TRUE)
+summary(pca_model)
+plot(pca_model)
+
+
+#########################################
+# 11. KNN Regression
+#########################################
+library(kknn)
+
+knnr_model <- kknn(Sepal.Length ~ ., train = iris, test = iris, k = 5)
+summary(knnr_model$fit)
+
+
+#########################################
+# 12. XGBoost
+#########################################
+library(xgboost)
+
+x_data <- as.matrix(iris[, -5])
+x_label <- as.numeric(iris$Species) - 1
+
+dtrain <- xgb.DMatrix(data = x_data, label = x_label)
+
+xgb_model <- xgboost(
+  data = dtrain,
+  nrounds = 50,
+  objective = "multi:softprob",
+  num_class = 3
+)
+
+print(xgb_model)
