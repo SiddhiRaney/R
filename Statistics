@@ -66,3 +66,86 @@ colnames(values3) <- c("A", "B", "C")
 rownames(values3) <- c("Group1", "Group2")
 barplot(values3, beside = TRUE, col = c("red", "blue"),
         main = "Grouped Bar Plot", legend = rownames(values3))
+-------------------------------------------
+11. DOT PLOT
+Simple dot chart showing values for categories
+
+values <- c(5, 12, 18, 9)
+categories <- c("W", "X", "Y", "Z")
+dotchart(values, labels = categories, main = "Dot Plot", col = "darkgreen")
+
+-------------------------------------------
+12. VIOLIN PLOT
+Shows distribution + density in one plot
+
+library(vioplot)
+set.seed(1)
+vdata <- rnorm(100, mean = 60, sd = 10)
+vioplot(vdata, col = "lightblue", main = "Violin Plot")
+
+-------------------------------------------
+13. HEATMAP
+Color-coded matrix values
+
+mat <- matrix(rnorm(25), nrow = 5)
+heatmap(mat, main = "Heatmap")
+
+-------------------------------------------
+14. PAIR PLOT (SCATTERPLOT MATRIX)
+Shows relationships between all variable pairs
+
+df <- data.frame(a=rnorm(50), b=rnorm(50), c=rnorm(50))
+pairs(df, main = "Scatterplot Matrix")
+
+-------------------------------------------
+15. QQ PLOT
+Checks normality of data
+
+qqnorm(data3)
+qqline(data3, col = "red", lwd = 2, main = "QQ Plot")
+
+-------------------------------------------
+16. STACKED BAR PLOT
+Shows parts of a whole with stacked bars
+
+values4 <- matrix(c(5,7,6,4,3,8), nrow=2, byrow=TRUE)
+colnames(values4) <- c("A","B","C")
+rownames(values4) <- c("Group1","Group2")
+barplot(values4, col=c("purple","gold"), main="Stacked Bar Plot")
+
+-------------------------------------------
+17. AREA PLOT
+Shaded plot showing magnitude across time
+
+x <- 1:10
+y <- c(3,5,7,6,8,10,12,11,14,15)
+plot(x, y, type="n", main="Area Plot")
+polygon(c(x, rev(x)), c(y, rep(0,length(y))), col="lightgreen")
+
+-------------------------------------------
+18. LOLLIPOP CHART
+Dots with stems (alternative to barplot)
+
+vals <- c(10, 15, 7, 12)
+cats <- c("A","B","C","D")
+plot(vals, type="p", pch=19, xaxt="n", main="Lollipop Chart")
+segments(1:4, 0, 1:4, vals, col="blue")
+axis(1, at=1:4, labels=cats)
+
+-------------------------------------------
+19. CORRELATION PLOT
+Shows correlation matrix
+
+library(corrplot)
+corrdata <- matrix(rnorm(25), nrow=5)
+corrplot(cor(corrdata), method="circle", main="Correlation Plot")
+
+-------------------------------------------
+20. 3D SCATTER PLOT
+3-dimensional data visualization
+
+library(scatterplot3d)
+x <- rnorm(50)
+y <- rnorm(50)
+z <- rnorm(50)
+scatterplot3d(x, y, z, color="blue", main="3D Scatter Plot")
