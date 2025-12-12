@@ -2,75 +2,59 @@
 # 1. Linear Regression
 #########################################
 library(caret)
-
 data(mtcars)
 lr_model <- train(mpg ~ wt + hp, data = mtcars, method = "lm")
 summary(lr_model)
-
 
 #########################################
 # 2. Logistic Regression
 #########################################
 data <- mtcars
 data$am <- factor(data$am)
-
 log_model <- glm(am ~ wt + hp, data = data, family = binomial)
 summary(log_model)
-
 
 #########################################
 # 3. Decision Tree
 #########################################
 library(rpart)
 library(rpart.plot)
-
 dt_model <- rpart(Species ~ ., data = iris)
 rpart.plot(dt_model)
-
 
 #########################################
 # 4. Random Forest
 #########################################
 library(randomForest)
-
 rf_model <- randomForest(Species ~ ., data = iris, ntree = 200)
 print(rf_model)
-
 
 #########################################
 # 5. KNN Classification
 #########################################
 library(class)
-
 train <- iris[1:100, -5]
 test  <- iris[101:150, -5]
-
 train_labels <- iris[1:100, 5]
 test_labels  <- iris[101:150, 5]
-
 knn_pred <- knn(train, test, train_labels, k = 5)
 table(knn_pred, test_labels)
-
 
 #########################################
 # 6. SVM
 #########################################
 library(e1071)
-
 svm_model <- svm(Species ~ ., data = iris, kernel = "radial")
 svm_pred <- predict(svm_model, iris)
 table(svm_pred, iris$Species)
-
 
 #########################################
 # 7. Naive Bayes
 #########################################
 library(e1071)
-
 nb_model <- naiveBayes(Species ~ ., data = iris)
 nb_pred <- predict(nb_model, iris)
 table(nb_pred, iris$Species)
-
 
 #########################################
 # 8. K-Means Clustering
@@ -79,7 +63,6 @@ set.seed(42)
 km_model <- kmeans(iris[, 1:4], centers = 3)
 print(km_model$cluster)
 
-
 #########################################
 # 9. Hierarchical Clustering
 #########################################
@@ -87,39 +70,158 @@ dist_mat <- dist(iris[, 1:4])
 hc_model <- hclust(dist_mat, method = "complete")
 plot(hc_model)
 
-
 #########################################
-# 10. PCA (Principal Component Analysis)
+# 10. PCA
 #########################################
 pca_model <- prcomp(iris[, 1:4], scale. = TRUE)
 summary(pca_model)
 plot(pca_model)
 
-
 #########################################
 # 11. KNN Regression
 #########################################
 library(kknn)
-
 knnr_model <- kknn(Sepal.Length ~ ., train = iris, test = iris, k = 5)
 summary(knnr_model$fit)
-
 
 #########################################
 # 12. XGBoost
 #########################################
 library(xgboost)
-
 x_data <- as.matrix(iris[, -5])
 x_label <- as.numeric(iris$Species) - 1
-
 dtrain <- xgb.DMatrix(data = x_data, label = x_label)
-
-xgb_model <- xgboost(
-  data = dtrain,
-  nrounds = 50,
-  objective = "multi:softprob",
-  num_class = 3
-)
-
+xgb_model <- xgboost(data = dtrain, nrounds = 50, objective = "multi:softprob", num_class = 3)
 print(xgb_model)
+
+#########################################
+# 13. Lasso Regression
+#########################################
+library(glmnet)
+x <- as.matrix(mtcars[, c("wt", "hp")])
+y <- mtcars$mpg
+lasso_model <- cv.glmnet(x, y, alpha = 1)
+print(lasso_model$lambda.min)
+
+#########################################
+# 14. Ridge Regression
+#########################################
+ridge_model <- cv.glmnet(x, y, alpha = 0)
+print(ridge_model$lambda.min)
+
+#########################################
+# 15. Elastic Net Regression
+#########################################
+enet_model <- cv.glmnet(x, y, alpha = 0.5)
+print(enet_model$lambda.min)
+
+#########################################
+# 16. Gradient Boosting Machine
+#########################################
+library(gbm)
+gbm_model <- gbm(Species ~ ., data = iris, distribution = "multinomial", n.trees = 200, interaction.depth = 3)
+summary(gbm_model)
+
+#########################################
+# 17. AdaBoost
+#########################################
+library(ada)
+ada_model <- ada(Species ~ ., data = iris, iter = 100)
+summary(ada_model)
+
+#########################################
+# 18. LightGBM
+#########################################
+library(lightgbm)
+train_data <- lgb.Dataset(data = as.matrix(iris[, -5]), label = x_label)
+lgb_model <- lgb.train(params = list(objective = "multiclass", num_class = 3), data = train_data, nrounds = 100)
+print(lgb_model)
+
+#########################################
+# 19. ANN
+#########################################
+library(nnet)
+ann_model <- nnet(Species ~ ., data = iris, size = 5, maxit = 500)
+summary(ann_model)
+
+#########################################
+# 20. ARIMA Time Series
+#########################################
+library(forecast)
+ts_model <- auto.arima(AirPassengers)
+summary(ts_model)
+plot(forecast(ts_model))
+
+#########################################
+# 21. LSTM
+#########################################
+library(keras)
+model <- keras_model_sequential() %>%
+  layer_lstm(units = 32, input_shape = c(12,1)) %>%
+  layer_dense(units = 1)
+summary(model)
+
+#########################################
+# 22. DBSCAN
+#########################################
+library(dbscan)
+db_model <- dbscan(iris[, 1:4], eps = 0.5, minPts = 5)
+print(db_model$cluster)
+
+#########################################
+# 23. Gaussian Mixture Model
+#########################################
+library(mclust)
+gmm_model <- Mclust(iris[, 1:4])
+summary(gmm_model)
+
+#########################################
+# 24. Apriori
+#########################################
+library(arules)
+transactions <- as(as.data.frame(iris[, -5]), "transactions")
+rules <- apriori(transactions, parameter = list(supp = 0.1, conf = 0.8))
+inspect(rules)
+
+#########################################
+# 25. LDA
+#########################################
+library(MASS)
+lda_model <- lda(Species ~ ., data = iris)
+lda_pred <- predict(lda_model)$class
+table(lda_pred, iris$Species)
+
+#########################################
+# 26. QDA
+#########################################
+qda_model <- qda(Species ~ ., data = iris)
+qda_pred <- predict(qda_model)$class
+table(qda_pred, iris$Species)
+
+#########################################
+# 27. SOM
+#########################################
+library(kohonen)
+som_grid <- somgrid(xdim = 5, ydim = 5, topo = "hexagonal")
+som_model <- som(as.matrix(iris[, 1:4]), som_grid)
+plot(som_model)
+
+#########################################
+# 28. T-SNE
+#########################################
+library(Rtsne)
+tsne_model <- Rtsne(iris[, 1:4])
+plot(tsne_model$Y)
+
+#########################################
+# 29. Linear SVM
+#########################################
+svm_linear <- svm(Species ~ ., data = iris, kernel = "linear")
+table(predict(svm_linear, iris), iris$Species)
+
+#########################################
+# 30. Extra Trees
+#########################################
+library(extraTrees)
+et_model <- extraTrees(x = iris[, -5], y = iris$Species, ntree = 300)
+print(et_model)
