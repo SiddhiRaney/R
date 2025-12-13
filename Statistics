@@ -149,3 +149,91 @@ x <- rnorm(50)
 y <- rnorm(50)
 z <- rnorm(50)
 scatterplot3d(x, y, z, color="blue", main="3D Scatter Plot")
+
+# -------------------------------------------
+# 21. STEP PLOT
+# Shows changes at discrete intervals
+
+x <- 1:10
+y <- c(2,4,6,5,7,9,8,10,12,11)
+plot(x, y, type="s", main="Step Plot", col="brown")
+
+# -------------------------------------------
+# 22. STRIP CHART
+# One-dimensional scatter plot
+
+data5 <- rnorm(30, mean=50)
+stripchart(data5, method="jitter", pch=19, col="darkblue",
+           main="Strip Chart")
+
+# -------------------------------------------
+# 23. ECDF PLOT
+# Empirical Cumulative Distribution Function
+
+plot(ecdf(data5), main="ECDF Plot", col="red")
+
+# -------------------------------------------
+# 24. RUG PLOT
+# Shows individual observations on axis
+
+plot(density(data5), main="Rug Plot")
+rug(data5, col="blue")
+
+# -------------------------------------------
+# 25. MOSAIC PLOT
+# Shows relationship between categorical variables
+
+data6 <- table(
+  Gender = c("Male","Female","Male","Female","Male","Female"),
+  Result = c("Pass","Fail","Pass","Pass","Fail","Fail")
+)
+mosaicplot(data6, main="Mosaic Plot", col=TRUE)
+
+# -------------------------------------------
+# 26. DOT PLOT (USING PLOT)
+# Alternative dot plot using plot()
+
+x <- 1:5
+y <- c(3,6,9,4,7)
+plot(x, y, pch=19, main="Simple Dot Plot", col="purple")
+
+# -------------------------------------------
+# 27. CUMULATIVE LINE PLOT
+# Shows cumulative sum over time
+
+values <- c(2,4,6,3,5)
+cum_vals <- cumsum(values)
+plot(cum_vals, type="l", col="darkgreen",
+     main="Cumulative Line Plot")
+
+# -------------------------------------------
+# 28. RADAR / SPIDER PLOT
+# Multivariate comparison
+
+library(fmsb)
+radar_data <- data.frame(
+  A=c(5,4,3),
+  B=c(4,5,2),
+  C=c(3,4,5),
+  D=c(4,3,4)
+)
+radarchart(radar_data, main="Radar Plot")
+
+# -------------------------------------------
+# 29. TIME SERIES PLOT
+# Data plotted over time
+
+ts_data <- ts(rnorm(20), start=2020, frequency=4)
+plot(ts_data, main="Time Series Plot", col="blue")
+
+# -------------------------------------------
+# 30. ERROR BAR PLOT
+# Shows mean with variability
+
+means <- c(10,15,12)
+errors <- c(2,3,1.5)
+bar_centers <- barplot(means, main="Error Bar Plot",
+                       col="lightblue", ylim=c(0,20))
+arrows(bar_centers, means-errors, bar_centers,
+       means+errors, angle=90, code=3, length=0.1)
+
