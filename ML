@@ -225,3 +225,77 @@ table(predict(svm_linear, iris), iris$Species)
 library(extraTrees)
 et_model <- extraTrees(x = iris[, -5], y = iris$Species, ntree = 300)
 print(et_model)
+#########################################
+# 31. Bagging
+#########################################
+library(ipred)
+bag_model <- bagging(Species ~ ., data = iris, nbagg = 50)
+bag_pred <- predict(bag_model, iris)
+table(bag_pred, iris$Species)
+
+#########################################
+# 32. Boosted Decision Trees (C5.0)
+#########################################
+library(C50)
+c50_model <- C5.0(Species ~ ., data = iris)
+c50_pred <- predict(c50_model, iris)
+table(c50_pred, iris$Species)
+
+#########################################
+# 33. Principal Component Regression (PCR)
+#########################################
+library(pls)
+pcr_model <- pcr(mpg ~ wt + hp, data = mtcars, scale = TRUE, validation = "CV")
+summary(pcr_model)
+
+#########################################
+# 34. Partial Least Squares (PLS)
+#########################################
+pls_model <- plsr(mpg ~ wt + hp, data = mtcars, scale = TRUE, validation = "CV")
+summary(pls_model)
+
+#########################################
+# 35. Multinomial Logistic Regression
+#########################################
+library(nnet)
+multi_log_model <- multinom(Species ~ ., data = iris)
+summary(multi_log_model)
+
+#########################################
+# 36. Isolation Forest (Anomaly Detection)
+#########################################
+library(isotree)
+iso_model <- isolation.forest(iris[, 1:4])
+iso_score <- predict(iso_model, iris[, 1:4])
+summary(iso_score)
+
+#########################################
+# 37. Autoencoder
+#########################################
+library(keras)
+ae_model <- keras_model_sequential() %>%
+  layer_dense(units = 3, activation = "relu", input_shape = 4) %>%
+  layer_dense(units = 4, activation = "linear")
+summary(ae_model)
+
+#########################################
+# 38. HMM (Hidden Markov Model)
+#########################################
+library(depmixS4)
+hmm_model <- depmix(response = Sepal.Length ~ 1, data = iris, nstates = 3)
+hmm_fit <- fit(hmm_model)
+summary(hmm_fit)
+
+#########################################
+# 39. Cox Proportional Hazards Model
+#########################################
+library(survival)
+cox_model <- coxph(Surv(time = wt, event = hp > 100) ~ mpg, data = mtcars)
+summary(cox_model)
+
+#########################################
+# 40. Fuzzy C-Means Clustering
+#########################################
+library(e1071)
+fcm_model <- cmeans(iris[, 1:4], centers = 3, m = 2)
+print(fcm_model$cluster)
