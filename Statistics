@@ -236,4 +236,99 @@ bar_centers <- barplot(means, main="Error Bar Plot",
                        col="lightblue", ylim=c(0,20))
 arrows(bar_centers, means-errors, bar_centers,
        means+errors, angle=90, code=3, length=0.1)
+# -------------------------------------------
+# 31. HEXBIN PLOT
+# Useful for dense scatter data
+
+library(hexbin)
+x <- rnorm(1000)
+y <- rnorm(1000)
+plot(hexbin(x, y), main = "Hexbin Plot")
+
+# -------------------------------------------
+# 32. BUBBLE PLOT
+# Scatter plot with varying point sizes
+
+x <- c(1,2,3,4,5)
+y <- c(5,3,6,2,4)
+size <- c(10,20,30,15,25)
+symbols(x, y, circles=size, inches=0.3,
+        bg="lightblue", main="Bubble Plot")
+
+# -------------------------------------------
+# 33. WATERFALL PLOT
+# Shows cumulative effect of values
+
+library(ggplot2)
+wf <- data.frame(
+  step = c("Start","A","B","C","End"),
+  value = c(100, -20, 30, -10, 100)
+)
+ggplot(wf, aes(x=step, y=value)) +
+  geom_bar(stat="identity") +
+  ggtitle("Waterfall Plot")
+
+# -------------------------------------------
+# 34. RIDGE PLOT
+# Multiple density plots
+
+library(ggridges)
+df <- data.frame(
+  value = rnorm(200),
+  group = rep(c("A","B","C","D"), each=50)
+)
+ggplot(df, aes(x=value, y=group, fill=group)) +
+  geom_density_ridges() +
+  ggtitle("Ridge Plot")
+
+# -------------------------------------------
+# 35. SUNFLOWER PLOT
+# Handles overlapping points
+
+x <- rnorm(100)
+y <- rnorm(100)
+sunflowerplot(x, y, main="Sunflower Plot")
+
+# -------------------------------------------
+# 36. ANDREWS CURVES
+# Multivariate visualization
+
+data(iris)
+andrews.curves(iris[,1:4], groups=iris$Species,
+               main="Andrews Curves")
+
+# -------------------------------------------
+# 37. PARALLEL COORDINATE PLOT
+# Compares multivariate observations
+
+library(MASS)
+parcoord(iris[,1:4], col=as.numeric(iris$Species),
+         main="Parallel Coordinate Plot")
+
+# -------------------------------------------
+# 38. STACKED AREA PLOT
+# Shows cumulative contributions
+
+x <- 1:5
+y1 <- c(2,4,6,8,10)
+y2 <- c(1,3,5,7,9)
+mat <- cbind(y1, y2)
+matplot(x, mat, type="n", main="Stacked Area Plot")
+polygon(c(x, rev(x)), c(y1+y2, rev(y1)), col="lightblue")
+polygon(c(x, rev(x)), c(y1, rep(0,5)), col="lightgreen")
+
+# -------------------------------------------
+# 39. LORENZ CURVE
+# Measures inequality
+
+library(ineq)
+income <- rlnorm(100)
+plot(Lc(income), main="Lorenz Curve")
+
+# -------------------------------------------
+# 40. CARTESIAN FUNCTION PLOT
+# Plot mathematical function
+
+curve(sin(x), from=0, to=2*pi,
+      main="Sine Function Plot", col="red")
 
