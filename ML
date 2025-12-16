@@ -299,3 +299,70 @@ summary(cox_model)
 library(e1071)
 fcm_model <- cmeans(iris[, 1:4], centers = 3, m = 2)
 print(fcm_model$cluster)
+#########################################
+# 41. Bayesian Linear Regression
+#########################################
+library(brms)
+bayes_lm <- brm(mpg ~ wt + hp, data = mtcars, chains = 2, iter = 1000)
+summary(bayes_lm)
+
+#########################################
+# 42. Bayesian Logistic Regression
+#########################################
+bayes_log <- brm(am ~ wt + hp, data = mtcars, family = bernoulli(), chains = 2)
+summary(bayes_log)
+
+#########################################
+# 43. CART Regression Tree
+#########################################
+library(rpart)
+cart_reg <- rpart(mpg ~ wt + hp, data = mtcars)
+print(cart_reg)
+
+#########################################
+# 44. CART Classification Tree
+#########################################
+cart_clf <- rpart(Species ~ ., data = iris)
+print(cart_clf)
+
+#########################################
+# 45. Multivariate Adaptive Regression Splines (MARS)
+#########################################
+library(earth)
+mars_model <- earth(mpg ~ wt + hp, data = mtcars)
+summary(mars_model)
+
+#########################################
+# 46. Probabilistic PCA
+#########################################
+library(pcaMethods)
+ppca_model <- pca(iris[,1:4], method = "ppca")
+summary(ppca_model)
+
+#########################################
+# 47. Robust Regression
+#########################################
+library(MASS)
+robust_model <- rlm(mpg ~ wt + hp, data = mtcars)
+summary(robust_model)
+
+#########################################
+# 48. Quantile Regression
+#########################################
+library(quantreg)
+qr_model <- rq(mpg ~ wt + hp, data = mtcars, tau = 0.5)
+summary(qr_model)
+
+#########################################
+# 49. One-Class SVM (Anomaly Detection)
+#########################################
+library(e1071)
+ocsvm_model <- svm(iris[,1:4], type = "one-classification", kernel = "radial")
+summary(ocsvm_model)
+
+#########################################
+# 50. Association Rule Mining – Eclat
+#########################################
+library(arules)
+eclat_rules <- eclat(transactions, parameter = list(supp = 0.1, maxlen = 5))
+inspect(eclat_rules)
