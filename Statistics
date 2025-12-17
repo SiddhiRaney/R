@@ -332,3 +332,92 @@ plot(Lc(income), main="Lorenz Curve")
 curve(sin(x), from=0, to=2*pi,
       main="Sine Function Plot", col="red")
 
+# -------------------------------------------
+# 41. CANDLESTICK PLOT
+# Financial OHLC data visualization
+
+library(quantmod)
+getSymbols("AAPL")
+chartSeries(AAPL, type="candlesticks",
+            main="Candlestick Plot")
+
+# -------------------------------------------
+# 42. VOLCANO PLOT
+# Used in genomics (logFC vs significance)
+
+x <- rnorm(100)
+y <- -log10(runif(100))
+plot(x, y, pch=19, col="red",
+     main="Volcano Plot",
+     xlab="Log Fold Change",
+     ylab="-log10(p-value)")
+
+# -------------------------------------------
+# 43. BIVARIATE DENSITY PLOT
+# Density of two variables
+
+x <- rnorm(500)
+y <- rnorm(500)
+kde <- kde2d(x, y)
+contour(kde, main="Bivariate Density Plot")
+
+# -------------------------------------------
+# 44. FILLED CONTOUR PLOT
+# Contour plot with color fill
+
+filled.contour(kde, main="Filled Contour Plot")
+
+# -------------------------------------------
+# 45. SPIKE PLOT
+# Vertical spikes from baseline
+
+x <- 1:10
+y <- c(3,6,2,7,5,9,4,8,6,10)
+plot(x, y, type="h", lwd=2,
+     main="Spike Plot")
+
+# -------------------------------------------
+# 46. DOT STRIP PLOT
+# Compact dot visualization
+
+data7 <- rnorm(50)
+dotchart(data7, main="Dot Strip Plot")
+
+# -------------------------------------------
+# 47. RANK PLOT
+# Values ranked and plotted
+
+vals <- rnorm(30)
+plot(sort(vals), pch=19,
+     main="Rank Plot",
+     ylab="Sorted Values")
+
+# -------------------------------------------
+# 48. FREQUENCY POLYGON
+# Line version of histogram
+
+hist(data1, plot=FALSE) -> h
+plot(h$mids, h$counts, type="l",
+     main="Frequency Polygon",
+     xlab="Value", ylab="Frequency")
+
+# -------------------------------------------
+# 49. MEAN–SD PLOT
+# Mean with standard deviation
+
+m <- mean(data5)
+s <- sd(data5)
+plot(1, m, ylim=c(m-s-5, m+s+5),
+     pch=19, main="Mean–SD Plot")
+arrows(1, m-s, 1, m+s, angle=90,
+       code=3, length=0.1)
+
+# -------------------------------------------
+# 50. HORIZON PLOT
+# Time series visualization
+
+library(horizonplot)
+ts_data <- ts(rnorm(100))
+horizonplot(ts_data, main="Horizon Plot")
+
+
