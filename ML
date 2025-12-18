@@ -366,3 +366,74 @@ summary(ocsvm_model)
 library(arules)
 eclat_rules <- eclat(transactions, parameter = list(supp = 0.1, maxlen = 5))
 inspect(eclat_rules)
+#########################################
+# 51. Huber Regression
+#########################################
+library(MASS)
+huber_model <- rlm(mpg ~ wt + hp, data = mtcars, psi = psi.huber)
+summary(huber_model)
+
+#########################################
+# 52. Generalized Additive Model (GAM)
+#########################################
+library(mgcv)
+gam_model <- gam(mpg ~ s(wt) + s(hp), data = mtcars)
+summary(gam_model)
+plot(gam_model)
+
+#########################################
+# 53. Bayesian Network
+#########################################
+library(bnlearn)
+bn_data <- iris
+bn_model <- hc(bn_data)
+plot(bn_model)
+
+#########################################
+# 54. Canonical Correlation Analysis (CCA)
+#########################################
+x_vars <- iris[, 1:2]
+y_vars <- iris[, 3:4]
+cca_model <- cancor(x_vars, y_vars)
+print(cca_model$cor)
+
+#########################################
+# 55. Multidimensional Scaling (MDS)
+#########################################
+dist_iris <- dist(iris[, 1:4])
+mds_model <- cmdscale(dist_iris)
+plot(mds_model, col = as.numeric(iris$Species))
+
+#########################################
+# 56. Independent Component Analysis (ICA)
+#########################################
+library(fastICA)
+ica_model <- fastICA(iris[, 1:4], n.comp = 2)
+plot(ica_model$S)
+
+#########################################
+# 57. Extreme Learning Machine (ELM)
+#########################################
+library(elmNN)
+elm_model <- elmtrain(as.matrix(iris[,1:4]), as.numeric(iris$Species), nhid = 10)
+print(elm_model)
+
+#########################################
+# 58. Zero-Inflated Poisson Regression
+#########################################
+library(pscl)
+zip_model <- zeroinfl(mpg ~ wt + hp | wt, data = mtcars)
+summary(zip_model)
+
+#########################################
+# 59. Poisson Regression
+#########################################
+pois_model <- glm(mpg ~ wt + hp, data = mtcars, family = poisson())
+summary(pois_model)
+
+#########################################
+# 60. Negative Binomial Regression
+#########################################
+library(MASS)
+nb_model <- glm.nb(mpg ~ wt + hp, data = mtcars)
+summary(nb_model)
