@@ -437,3 +437,77 @@ summary(pois_model)
 library(MASS)
 nb_model <- glm.nb(mpg ~ wt + hp, data = mtcars)
 summary(nb_model)
+#########################################
+# 61. Multilevel / Mixed Effects Model
+#########################################
+library(lme4)
+mixed_model <- lmer(mpg ~ wt + hp + (1 | cyl), data = mtcars)
+summary(mixed_model)
+
+#########################################
+# 62. Generalized Linear Mixed Model (GLMM)
+#########################################
+glmm_model <- glmer(am ~ wt + hp + (1 | cyl),
+                    data = mtcars,
+                    family = binomial)
+summary(glmm_model)
+
+#########################################
+# 63. Tobit Regression
+#########################################
+library(AER)
+tobit_model <- tobit(mpg ~ wt + hp, data = mtcars, left = 10)
+summary(tobit_model)
+
+#########################################
+# 64. Probit Regression
+#########################################
+probit_model <- glm(am ~ wt + hp,
+                    data = mtcars,
+                    family = binomial(link = "probit"))
+summary(probit_model)
+
+#########################################
+# 65. Multivariate Linear Regression
+#########################################
+multi_lm <- lm(cbind(mpg, disp) ~ wt + hp, data = mtcars)
+summary(multi_lm)
+
+#########################################
+# 66. Structural Equation Modeling (SEM)
+#########################################
+library(lavaan)
+sem_model <- '
+  mpg ~ wt + hp
+  disp ~ wt
+'
+fit_sem <- sem(sem_model, data = mtcars)
+summary(fit_sem)
+
+#########################################
+# 67. Gaussian Process Regression
+#########################################
+library(kernlab)
+gpr_model <- gausspr(mpg ~ wt + hp, data = mtcars)
+summary(gpr_model)
+
+#########################################
+# 68. Rule-Based Classifier (PART)
+#########################################
+library(RWeka)
+part_model <- PART(Species ~ ., data = iris)
+summary(part_model)
+
+#########################################
+# 69. Self-Training Semi-Supervised Learning
+#########################################
+library(RSSL)
+semi_model <- SelfLearning(Species ~ ., data = iris)
+summary(semi_model)
+
+#########################################
+# 70. Spectral Clustering
+#########################################
+library(kernlab)
+spec_model <- specc(as.matrix(iris[, 1:4]), centers = 3)
+plot(spec_model, col = as.numeric(spec_model))
