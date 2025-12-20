@@ -420,4 +420,115 @@ library(horizonplot)
 ts_data <- ts(rnorm(100))
 horizonplot(ts_data, main="Horizon Plot")
 
+# -------------------------------------------
+# 51. JITTER PLOT
+# Adds noise to avoid overlapping points
 
+x <- rep(1, 20)
+y <- rnorm(20, mean=50)
+plot(jitter(x), y, pch=19, col="blue",
+     main="Jitter Plot", xaxt="n")
+axis(1, at=1, labels="Group")
+
+# -------------------------------------------
+# 52. BAGPLOT
+# Bivariate boxplot (robust scatter)
+
+library(aplpack)
+x <- rnorm(100)
+y <- rnorm(100)
+bagplot(x, y, main="Bag Plot")
+
+# -------------------------------------------
+# 53. LADDER PLOT
+# Multiple lines over time
+
+mat <- matrix(rnorm(25), nrow=5)
+matplot(t(mat), type="l", lty=1,
+        main="Ladder Plot")
+
+# -------------------------------------------
+# 54. PROFILE PLOT
+# Shows group-wise means across factors
+
+data(iris)
+interaction.plot(iris$Species, iris$Petal.Width,
+                 iris$Sepal.Length,
+                 main="Profile Plot",
+                 ylab="Sepal Length")
+
+# -------------------------------------------
+# 55. ALLUVIAL PLOT
+# Flow between categorical variables
+
+library(ggalluvial)
+df <- data.frame(
+  stage1=c("A","A","B","B"),
+  stage2=c("C","D","C","D"),
+  freq=c(10,15,20,5)
+)
+ggplot(df,
+       aes(y=freq, axis1=stage1, axis2=stage2)) +
+  geom_alluvium(aes(fill=stage1)) +
+  geom_stratum() +
+  geom_text(stat="stratum", aes(label=after_stat(stratum))) +
+  scale_x_discrete(limits=c("Stage 1","Stage 2")) +
+  ggtitle("Alluvial Plot")
+
+# -------------------------------------------
+# 56. BEESWARM PLOT
+# Alternative to strip chart
+
+library(beeswarm)
+beeswarm(data5, main="Beeswarm Plot",
+         col="darkgreen", pch=19)
+
+# -------------------------------------------
+# 57. SLOPEGRAPH
+# Change between two points
+
+library(ggplot2)
+df <- data.frame(
+  name=c("A","B","C"),
+  start=c(10,15,20),
+  end=c(18,12,25)
+)
+ggplot(df) +
+  geom_segment(aes(x=1, xend=2,
+                   y=start, yend=end)) +
+  geom_point(aes(x=1, y=start)) +
+  geom_point(aes(x=2, y=end)) +
+  scale_x_continuous(breaks=c(1,2),
+                     labels=c("Start","End")) +
+  ggtitle("Slopegraph")
+
+# -------------------------------------------
+# 58. SPIRAL PLOT
+# Circular progression of values
+
+theta <- seq(0, 4*pi, length.out=100)
+r <- seq(1, 10, length.out=100)
+plot(r*cos(theta), r*sin(theta),
+     type="l", main="Spiral Plot")
+
+# -------------------------------------------
+# 59. TREEMAP
+# Hierarchical proportions
+
+library(treemap)
+df <- data.frame(
+  group=c("A","B","C","D"),
+  value=c(30,20,25,25)
+)
+treemap(df,
+        index="group",
+        vSize="value",
+        title="Treemap")
+
+# -------------------------------------------
+# 60. DENDROGRAM
+# Hierarchical clustering visualization
+
+data(iris)
+hc <- hclust(dist(iris[,1:4]))
+plot(hc, main="Dendrogram")
