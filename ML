@@ -511,3 +511,74 @@ summary(semi_model)
 library(kernlab)
 spec_model <- specc(as.matrix(iris[, 1:4]), centers = 3)
 plot(spec_model, col = as.numeric(spec_model))
+#########################################
+# 71. K-Medoids Clustering (PAM)
+#########################################
+library(cluster)
+pam_model <- pam(iris[, 1:4], k = 3)
+print(pam_model$clustering)
+
+#########################################
+# 72. Affinity Propagation
+#########################################
+library(apcluster)
+ap_model <- apcluster(negDistMat(r=2), iris[,1:4])
+show(ap_model)
+
+#########################################
+# 73. Sparse Logistic Regression
+#########################################
+library(glmnet)
+x <- as.matrix(iris[,1:4])
+y <- as.numeric(iris$Species) - 1
+sparse_log <- cv.glmnet(x, y, family = "multinomial", alpha = 1)
+print(sparse_log$lambda.min)
+
+#########################################
+# 74. Robust PCA
+#########################################
+library(rrcov)
+rpca_model <- PcaHubert(iris[,1:4])
+summary(rpca_model)
+
+#########################################
+# 75. Polynomial Regression
+#########################################
+poly_model <- lm(mpg ~ poly(wt, 2) + poly(hp, 2), data = mtcars)
+summary(poly_model)
+
+#########################################
+# 76. LOESS Regression
+#########################################
+loess_model <- loess(mpg ~ wt, data = mtcars)
+summary(loess_model)
+
+#########################################
+# 77. Conditional Inference Tree
+#########################################
+library(party)
+ctree_model <- ctree(Species ~ ., data = iris)
+plot(ctree_model)
+
+#########################################
+# 78. Conditional Random Forest
+#########################################
+library(party)
+crf_model <- cforest(Species ~ ., data = iris)
+print(crf_model)
+
+#########################################
+# 79. Copula Model
+#########################################
+library(copula)
+norm_cop <- normalCopula(dim = 2)
+fit_cop <- fitCopula(norm_cop, iris[,1:2], method = "ml")
+summary(fit_cop)
+
+#########################################
+# 80. Empirical Bayesian Estimation
+#########################################
+library(ebayes)
+eb_model <- ebayes(lm(mpg ~ wt + hp, data = mtcars))
+summary(eb_model)
+
