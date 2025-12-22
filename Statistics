@@ -532,3 +532,79 @@ treemap(df,
 data(iris)
 hc <- hclust(dist(iris[,1:4]))
 plot(hc, main="Dendrogram")
+# -------------------------------------------
+# 61. PCA BIPLOT
+# Shows principal components and variable loadings
+
+data(iris)
+pca <- prcomp(iris[,1:4], scale.=TRUE)
+biplot(pca, main="PCA Biplot")
+
+# -------------------------------------------
+# 62. RUNNING MEDIAN PLOT
+# Smoothed trend using running median
+
+x <- 1:20
+y <- rnorm(20)
+plot(x, y, type="p", main="Running Median Plot")
+lines(runmed(y, k=5), col="red", lwd=2)
+
+# -------------------------------------------
+# 63. AUTOCORRELATION PLOT (ACF)
+# Shows correlation with lagged values
+
+ts_data <- ts(rnorm(50))
+acf(ts_data, main="Autocorrelation Plot")
+
+# -------------------------------------------
+# 64. PARTIAL AUTOCORRELATION PLOT (PACF)
+# Shows partial lag correlation
+
+pacf(ts_data, main="Partial Autocorrelation Plot")
+
+# -------------------------------------------
+# 65. LAG PLOT
+# Relationship between observations and lagged values
+
+lag.plot(ts_data, main="Lag Plot")
+
+# -------------------------------------------
+# 66. STAR PLOT
+# Multivariate observation comparison
+
+data(iris)
+stars(iris[,1:4], main="Star Plot")
+
+# -------------------------------------------
+# 67. RADIAL PLOT
+# Circular comparison of values
+
+library(plotrix)
+vals <- c(4,6,8,5,7)
+radial.plot(vals, main="Radial Plot")
+
+# -------------------------------------------
+# 68. NETWORK GRAPH
+# Nodes and edges visualization
+
+library(igraph)
+g <- graph(edges=c(1,2, 2,3, 3,4, 4,1), n=4)
+plot(g, main="Network Graph")
+
+# -------------------------------------------
+# 69. SCREE PLOT
+# Variance explained by principal components
+
+plot(pca, type="l", main="Scree Plot")
+
+# -------------------------------------------
+# 70. CONFIDENCE INTERVAL PLOT
+# Mean with confidence interval
+
+x <- rnorm(50, mean=10)
+m <- mean(x)
+se <- sd(x)/sqrt(length(x))
+plot(1, m, ylim=c(m-3*se, m+3*se),
+     pch=19, main="Confidence Interval Plot")
+arrows(1, m-1.96*se, 1, m+1.96*se,
+       angle=90, code=3, length=0.1)
