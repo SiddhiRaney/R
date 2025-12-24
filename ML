@@ -582,3 +582,74 @@ library(ebayes)
 eb_model <- ebayes(lm(mpg ~ wt + hp, data = mtcars))
 summary(eb_model)
 
+#########################################
+# 81. Factor Analysis
+#########################################
+fa_model <- factanal(iris[, 1:4], factors = 2, rotation = "varimax")
+print(fa_model)
+
+#########################################
+# 82. Non-negative Matrix Factorization (NMF)
+#########################################
+library(NMF)
+nmf_model <- nmf(as.matrix(iris[, 1:4]), rank = 2)
+summary(nmf_model)
+
+#########################################
+# 83. Ridge Logistic Regression
+#########################################
+library(glmnet)
+x <- as.matrix(iris[, 1:4])
+y <- as.numeric(iris$Species) - 1
+ridge_log <- cv.glmnet(x, y, family = "multinomial", alpha = 0)
+print(ridge_log$lambda.min)
+
+#########################################
+# 84. Bayesian Additive Regression Trees (BART)
+#########################################
+library(BART)
+bart_model <- gbart(x, y)
+print(bart_model)
+
+#########################################
+# 85. Tweedie Regression
+#########################################
+library(statmod)
+tweedie_model <- glm(mpg ~ wt + hp, data = mtcars,
+                     family = tweedie(var.power = 1.5, link.power = 0))
+summary(tweedie_model)
+
+#########################################
+# 86. Zero-Inflated Negative Binomial
+#########################################
+library(pscl)
+zinb_model <- zeroinfl(mpg ~ wt + hp | wt, data = mtcars, dist = "negbin")
+summary(zinb_model)
+
+#########################################
+# 87. Bayesian PCA
+#########################################
+library(pcaMethods)
+bpca_model <- pca(iris[,1:4], method = "bpca")
+summary(bpca_model)
+
+#########################################
+# 88. Kernel PCA
+#########################################
+library(kernlab)
+kpca_model <- kpca(~., data = iris[,1:4], kernel = "rbfdot")
+plot(rotated(kpca_model))
+
+#########################################
+# 89. Multiclass Probit Model
+#########################################
+library(MNP)
+mnp_model <- mnp(Species ~ ., data = iris, burnin = 100, mcmc = 500)
+summary(mnp_model)
+
+#########################################
+# 90. Sparse PCA
+#########################################
+library(elasticnet)
+spca_model <- spca(as.matrix(iris[,1:4]), K = 2)
+print(spca_model)
