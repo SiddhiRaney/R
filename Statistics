@@ -608,3 +608,99 @@ plot(1, m, ylim=c(m-3*se, m+3*se),
      pch=19, main="Confidence Interval Plot")
 arrows(1, m-1.96*se, 1, m+1.96*se,
        angle=90, code=3, length=0.1)
+# -------------------------------------------
+# 71. FACET PLOT
+# Same plot split by groups
+
+library(ggplot2)
+ggplot(iris, aes(x=Sepal.Length, y=Sepal.Width)) +
+  geom_point() +
+  facet_wrap(~Species) +
+  ggtitle("Facet Plot")
+
+# -------------------------------------------
+# 72. HALF VIOLIN PLOT
+# One-sided violin for comparison
+
+library(gghalves)
+ggplot(iris, aes(x=Species, y=Sepal.Length)) +
+  geom_half_violin(side="l", fill="skyblue") +
+  geom_boxplot(width=0.1) +
+  ggtitle("Half Violin Plot")
+
+# -------------------------------------------
+# 73. DOT + BOX PLOT
+# Combination of dot and boxplot
+
+stripchart(Sepal.Length ~ Species, data=iris,
+           method="jitter", pch=19, col="blue")
+boxplot(Sepal.Length ~ Species, data=iris,
+        add=TRUE, outline=FALSE)
+
+# -------------------------------------------
+# 74. SMOOTHED SCATTER PLOT
+# Scatter with smoothing line
+
+scatter.smooth(iris$Sepal.Length, iris$Sepal.Width,
+               main="Smoothed Scatter Plot")
+
+# -------------------------------------------
+# 75. ECDF COMPARISON PLOT
+# ECDF for multiple groups
+
+plot(ecdf(iris$Sepal.Length[iris$Species=="setosa"]),
+     col="red", main="ECDF Comparison")
+lines(ecdf(iris$Sepal.Length[iris$Species=="versicolor"]),
+      col="blue")
+lines(ecdf(iris$Sepal.Length[iris$Species=="virginica"]),
+      col="green")
+legend("bottomright",
+       legend=levels(iris$Species),
+       col=c("red","blue","green"), lwd=2)
+
+# -------------------------------------------
+# 76. MEAN LINE PLOT
+# Group-wise mean comparison
+
+means <- aggregate(Sepal.Length ~ Species, iris, mean)
+plot(means$Sepal.Length, type="b", pch=19,
+     xaxt="n", main="Mean Line Plot")
+axis(1, at=1:3, labels=means$Species)
+
+# -------------------------------------------
+# 77. HEATMAP WITH LABELS
+# Enhanced heatmap with values
+
+mat <- matrix(runif(16), nrow=4)
+heatmap(mat, Rowv=NA, Colv=NA,
+        main="Labeled Heatmap")
+
+# -------------------------------------------
+# 78. POLAR BAR PLOT
+# Circular bar plot
+
+library(plotrix)
+vals <- c(10,15,20,25)
+labels <- c("A","B","C","D")
+polar.plot(vals, labels=labels,
+           main="Polar Bar Plot")
+
+# -------------------------------------------
+# 79. STACKED DOT PLOT
+# Dot plot with stacking
+
+counts <- table(iris$Species)
+dotchart(counts, main="Stacked Dot Plot")
+
+# -------------------------------------------
+# 80. SIMPLE FUNCTION COMPARISON PLOT
+# Compare two mathematical functions
+
+curve(sin(x), from=0, to=2*pi,
+      col="red", lwd=2,
+      main="Function Comparison")
+curve(cos(x), add=TRUE,
+      col="blue", lwd=2)
+legend("topright",
+       legend=c("sin(x)","cos(x)"),
+       col=c("red","blue"), lwd=2)
