@@ -653,3 +653,80 @@ summary(mnp_model)
 library(elasticnet)
 spca_model <- spca(as.matrix(iris[,1:4]), K = 2)
 print(spca_model)
+#########################################
+# 91. Neural Network Regression
+#########################################
+library(nnet)
+nn_reg <- nnet(mpg ~ wt + hp, data = mtcars, size = 5, linout = TRUE)
+summary(nn_reg)
+
+#########################################
+# 92. Bayesian Ridge Regression
+#########################################
+library(brms)
+bayes_ridge <- brm(mpg ~ wt + hp, data = mtcars,
+                   prior = set_prior("normal(0,1)", class = "b"),
+                   chains = 2)
+summary(bayes_ridge)
+
+#########################################
+# 93. Kernel Ridge Regression
+#########################################
+library(kernlab)
+krr_model <- ksvm(mpg ~ wt + hp, data = mtcars, kernel = "rbfdot")
+summary(krr_model)
+
+#########################################
+# 94. Ordinal Logistic Regression
+#########################################
+library(MASS)
+mtcars$gear <- ordered(mtcars$gear)
+ord_model <- polr(gear ~ wt + hp, data = mtcars)
+summary(ord_model)
+
+#########################################
+# 95. Gaussian Naive Bayes
+#########################################
+library(e1071)
+gnb_model <- naiveBayes(Species ~ ., data = iris)
+summary(gnb_model)
+
+#########################################
+# 96. Bagged KNN
+#########################################
+library(ipred)
+bag_knn <- bagging(Species ~ ., data = iris, nbagg = 50, coob = TRUE)
+summary(bag_knn)
+
+#########################################
+# 97. Voting Ensemble
+#########################################
+library(caret)
+models <- caretList(Species ~ ., data = iris,
+                     trControl = trainControl(method="cv"),
+                     methodList = c("rf", "svmRadial", "knn"))
+ens_model <- caretEnsemble(models)
+summary(ens_model)
+
+#########################################
+# 98. One-vs-Rest Logistic Regression
+#########################################
+library(glmnet)
+x <- as.matrix(iris[,1:4])
+y <- as.numeric(iris$Species)
+ovr_model <- cv.glmnet(x, y, family = "multinomial")
+print(ovr_model$lambda.min)
+
+#########################################
+# 99. Time Series Decomposition
+#########################################
+ts_data <- ts(AirPassengers, frequency = 12)
+decomp <- decompose(ts_data)
+plot(decomp)
+
+#########################################
+# 100. Holt-Winters Exponential Smoothing
+#########################################
+hw_model <- HoltWinters(AirPassengers)
+summary(hw_model)
+plot(hw_model)
