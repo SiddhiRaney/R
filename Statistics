@@ -704,3 +704,41 @@ curve(cos(x), add=TRUE,
 legend("topright",
        legend=c("sin(x)","cos(x)"),
        col=c("red","blue"), lwd=2)
+
+# -------------------------------------------
+# 81. HISTOGRAM WITH DENSITY OVERLAY
+# Histogram combined with density curve
+
+hist(data5, probability=TRUE,
+     col="lightgray", main="Histogram with Density")
+lines(density(data5), col="red", lwd=2)
+
+# -------------------------------------------
+# 82. LOG SCALE PLOT
+# Logarithmic scale visualization
+
+x <- 1:10
+y <- 10^(1:10)
+plot(x, y, log="y", type="b",
+     main="Log Scale Plot")
+
+# -------------------------------------------
+# 83. BAR PLOT WITH ERROR BARS
+# Bars with variability shown
+
+means <- c(8, 12, 10)
+sd <- c(1.5, 2, 1)
+centers <- barplot(means, ylim=c(0,16),
+                   col="skyblue",
+                   main="Bar Plot with Error Bars")
+arrows(centers, means-sd,
+       centers, means+sd,
+       angle=90, code=3, length=0.1)
+
+# -------------------------------------------
+# 84. GROUPED LINE PLOT
+# Multiple lines comparison
+
+x <- 1:5
+y1 <- c(2,4,6,8
+
