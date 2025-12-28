@@ -741,4 +741,102 @@ arrows(centers, means-sd,
 
 x <- 1:5
 y1 <- c(2,4,6,8
+# -------------------------------------------
+# 84. GROUPED LINE PLOT
+# Multiple lines comparison
+
+x <- 1:5
+y1 <- c(2,4,6,8,10)
+y2 <- c(1,3,5,7,9)
+plot(x, y1, type="l", col="red", lwd=2,
+     ylim=c(0,12), main="Grouped Line Plot")
+lines(x, y2, col="blue", lwd=2)
+legend("topleft", legend=c("Line 1","Line 2"),
+       col=c("red","blue"), lwd=2)
+
+# -------------------------------------------
+# 85. CLEVELAND DOT PLOT
+# Alternative to bar chart
+
+values <- c(12, 18, 7, 15)
+names(values) <- c("A","B","C","D")
+dotchart(values, main="Cleveland Dot Plot")
+
+# -------------------------------------------
+# 86. PARETO CHART
+# Sorted bar chart with cumulative line
+
+values <- c(5,3,9,6,2)
+names(values) <- c("A","B","C","D","E")
+values <- sort(values, decreasing=TRUE)
+barplot(values, col="lightblue", main="Pareto Chart")
+lines(cumsum(values)/sum(values)*max(values),
+      type="b", col="red")
+
+# -------------------------------------------
+# 87. MIRROR BAR PLOT
+# Compare two groups oppositely
+
+group1 <- c(5,7,9)
+group2 <- c(6,8,10)
+barplot(group1, horiz=TRUE, col="blue",
+        xlim=c(-12,12), main="Mirror Bar Plot")
+barplot(-group2, horiz=TRUE, col="red", add=TRUE)
+
+# -------------------------------------------
+# 88. STEP HISTOGRAM
+# Histogram using step style
+
+hist(data1, freq=TRUE, col="lightgray",
+     main="Step Histogram")
+lines(density(data1)*length(data1),
+      col="blue", lwd=2)
+
+# -------------------------------------------
+# 89. RUN CHART
+# Data plotted in time order
+
+run_data <- cumsum(rnorm(20))
+plot(run_data, type="b", pch=19,
+     main="Run Chart")
+
+# -------------------------------------------
+# 90. CIRCULAR PLOT
+# Points arranged in a circle
+
+theta <- seq(0, 2*pi, length.out=20)
+plot(cos(theta), sin(theta), pch=19,
+     main="Circular Plot", asp=1)
+
+# -------------------------------------------
+# 91. EMPIRICAL BOXPLOT
+# Boxplot with jittered points
+
+boxplot(data5, main="Empirical Boxplot")
+stripchart(data5, add=TRUE,
+           method="jitter", col="blue")
+
+# -------------------------------------------
+# 92. SCATTER WITH REGRESSION LINE
+# Linear trend visualization
+
+x <- rnorm(50)
+y <- 2*x + rnorm(50)
+plot(x, y, pch=19,
+     main="Scatter with Regression Line")
+abline(lm(y ~ x), col="red", lwd=2)
+
+# -------------------------------------------
+# 93. DUAL AXIS PLOT
+# Two variables, two y-axes
+
+x <- 1:10
+y1 <- x^2
+y2 <- log(x)
+plot(x, y1, type="l", col="blue",
+     ylab="y1", main="Dual Axis Plot")
+par(new=TRUE)
+plot(x, y2, type="l", col="red",
+     axes=FALSE, xlab="", ylab="")
+axis(side=4)
 
