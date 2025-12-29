@@ -839,4 +839,68 @@ par(new=TRUE)
 plot(x, y2, type="l", col="red",
      axes=FALSE, xlab="", ylab="")
 axis(side=4)
+# -------------------------------------------
+# 94. HISTOGRAM COMPARISON
+# Compare two distributions
 
+hist(rnorm(100, mean=50), col=rgb(1,0,0,0.5),
+     main="Histogram Comparison", xlab="Value")
+hist(rnorm(100, mean=55), col=rgb(0,0,1,0.5),
+     add=TRUE)
+legend("topright", legend=c("Group 1","Group 2"),
+       fill=c("red","blue"))
+
+# -------------------------------------------
+# 95. SCATTER WITH LOESS SMOOTH
+# Non-linear smoothing
+
+x <- rnorm(100)
+y <- x^2 + rnorm(100)
+plot(x, y, pch=19, main="Scatter with LOESS")
+lines(lowess(x, y), col="red", lwd=2)
+
+# -------------------------------------------
+# 96. DOT MATRIX PLOT
+# Frequency visualization
+
+vals <- table(sample(letters[1:5], 50, replace=TRUE))
+dotchart(vals, main="Dot Matrix Plot")
+
+# -------------------------------------------
+# 97. STRIP + DENSITY COMBINATION
+# Distribution + points
+
+data8 <- rnorm(50)
+plot(density(data8), main="Density + Strip Chart")
+rug(data8, col="blue")
+
+# -------------------------------------------
+# 98. SMOOTHED TIME SERIES
+# Time series with smoothing
+
+ts_data <- ts(rnorm(50))
+plot(ts_data, main="Smoothed Time Series")
+lines(ma(ts_data, order=5), col="red", lwd=2)
+
+# -------------------------------------------
+# 99. POLYGON FREQUENCY PLOT
+# Closed frequency polygon
+
+h <- hist(data1, plot=FALSE)
+plot(h$mids, h$counts, type="n",
+     main="Polygon Frequency Plot",
+     xlab="Value", ylab="Frequency")
+polygon(c(min(h$mids), h$mids, max(h$mids)),
+        c(0, h$counts, 0),
+        col="lightblue", border="blue")
+
+# -------------------------------------------
+# 100. COMBINED MULTIPLOT (BASE R)
+# Bar + Line in one plot
+
+x <- 1:5
+bars <- c(4,7,6,8,5)
+line <- c(5,6,7,9,8)
+barplot(bars, col="lightgray",
+        main="Bar + Line Combined")
+lines(line, type
